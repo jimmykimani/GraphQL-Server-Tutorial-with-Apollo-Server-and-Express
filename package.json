@@ -1,0 +1,26 @@
+{
+  "name": "vulcan",
+  "version": "1.0.0",
+  "description": "graphql server for themis",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JK",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "apollo-server": "^2.8.1",
+    "apollo-server-express": "^2.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "graphql": "^14.4.2"
+  }
+}
