@@ -1,3 +1,5 @@
-import noteResolvers from './notes'
+/** @format */
 
-export default [noteResolvers]
+import noteResolvers from "./notes";
+
+export default [noteResolvers];

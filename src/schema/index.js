@@ -1,10 +1,10 @@
-import {
-    gql
-} from 'apollo-server-express';
+/** @format */
 
-import noteSchema from './notes'
+import { gql } from "apollo-server-express";
 
-const linkSchema = gql `
+import noteSchema from "./notes";
+
+const linkSchema = gql`
   type Query {
     _: Boolean
   }

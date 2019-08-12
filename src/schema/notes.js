@@ -1,8 +1,8 @@
-import {
-  gql
-} from 'apollo-server-express';
+/** @format */
 
-export default gql `
+import { gql } from "apollo-server-express";
+
+export default gql`
   extend type Query {
     notes: [Note!]
     note(id: ID!): Note!
@@ -11,11 +11,12 @@ export default gql `
   extend type Mutation {
     createNewNote(text: String!): Note!
     deleteNote(id: ID!): Boolean!
-    updateNote(id: ID!, text: String!): Note!
+    updateNote(id: ID!, text: String!): NoteUpdated
   }
 
   type Note {
     id: ID!
     text: String!
+    createdAt: String!
   }
 `;

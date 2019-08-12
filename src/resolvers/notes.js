@@ -1,58 +1,46 @@
-import uuidv4 from 'uuid/v4';
+/** @format */
+
+import uuidv4 from "uuid/v4";
 
 export default {
-    Query: {
-        notes: (parent, args, {
-            models
-        }) => {
-            return Object.values(models.notes)
-        },
-        note: (parent, {
-            id
-        }, {
-            models
-        }) => {
-            return models.notes[id]
-        }
+  Query: {
+    notes: async (parent, args, { models }) => {
+      return await models.Note.findAll();
     },
-    Mutation: {
-        createNewNote: (parent, {
-            text
-        }, {
-            models
-        }) => {
-            const id = uuidv4();
-            const newNote = {
-                id,
-                text
-            }
-            models.notes[id] = newNote;
-            return newNote;
-        },
 
-        deleteNote: (parent, {
-            id
-        }, {
-            models
-        }) => {
-            const {
-                [id]: note, ...otherNotes
-            } = models.notes
-            if (!note) {
-                return false
-            }
-            models.notes = otherNotes
-            return true
-        },
-        updateNote: (parent, {
-            args
-        }, {
-            models
-        }) => {
-            const {
-                id,
-                text
-            } = args
-        }
+    note: async (parent, { id }, { models }) => {
+      return await models.Note.findByPk(id);
     }
-}
+  },
+  Mutation: {
+    createNewNote: async (parent, { text }, { models }) => {
+      return await models.Note.create({
+        text
+      });
+    },
+
+    deleteNote: async (parent, { id }, { models }) => {
+      return await models.Note.destroy({
+        where: {
+          id
+        }
+      });
+    },
+    updateNote: async (parent, { id, text }, { models }) => {
+      await models.Note.update(
+        {
+          text
+        },
+        {
+          where: {
+            id: id
+          }
+        }
+      );
+      const updatedNote = await models.Note.findByPk(id, {
+        include
+      });
+      return updatedNote;
+    }
+  }
+};
