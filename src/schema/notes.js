@@ -11,7 +11,7 @@ export default gql`
   extend type Mutation {
     createNewNote(text: String!): Note!
     deleteNote(id: ID!): Boolean!
-    updateNote(id: ID!, text: String!): NoteUpdated
+    updateNote(id: ID!, text: String!): Note !
   }
 
   type Note {

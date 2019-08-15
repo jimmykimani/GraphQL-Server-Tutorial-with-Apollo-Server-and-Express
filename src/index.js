@@ -1,37 +1,42 @@
-import 'dotenv/config';
-import cors from 'cors';
-import express from 'express';
-import {
-    ApolloServer
-} from 'apollo-server-express';
+/** @format */
 
-import schema from './schema';
-import resolvers from './resolvers';
-import models, {
-    sequelize
-} from './models';
+import "dotenv/config";
+import cors from "cors";
+import http from "http";
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
+
+import schema from "./schema";
+import resolvers from "./resolvers";
+import models, { sequelize } from "./models";
 
 const app = express();
+
+const httpServer = http.createServer(app);
+
+const isTest = !!process.env.TEST_DATABASE;
+const isProduction = !!process.env.DATABASE_URL;
+const port = process.env.PORT || 8000;
 
 app.use(cors());
 
 const server = new ApolloServer({
-    typeDefs: schema,
-    resolvers,
-    context: {
-        models,
-    },
+  introspection: true,
+  playground: true,
+  typeDefs: schema,
+  resolvers,
+  context: {
+    models
+  }
 });
 
 server.applyMiddleware({
-    app,
-    path: '/graphql'
+  app,
+  path: "/graphql"
 });
 
-sequelize.sync().then(async () => {
-    app.listen({
-        port: 8000
-    }, () => {
-        console.log('Apollo Server on http://localhost:8000/graphql');
-    });
+sequelize.sync({ force: isTest || isProduction }).then(async () => {
+  httpServer.listen({ port }, () => {
+    console.log(`Apollo Server on http://localhost:${port}/graphql`);
+  });
 });
