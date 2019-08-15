@@ -12,6 +12,7 @@ export default {
       return await models.Note.findByPk(id);
     }
   },
+  
   Mutation: {
     createNewNote: async (parent, { text }, { models }) => {
       return await models.Note.create({
@@ -38,7 +39,6 @@ export default {
         }
       );
       const updatedNote = await models.Note.findByPk(id, {
-        include
       });
       return updatedNote;
     }
