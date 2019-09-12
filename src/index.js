@@ -17,17 +17,18 @@ const httpServer = http.createServer(app);
 const isTest = !!process.env.TEST_DATABASE;
 const isProduction = !!process.env.DATABASE_URL;
 const port = process.env.PORT || 8000;
-
 app.use(cors());
 
 const server = new ApolloServer({
-  introspection: true,
-  playground: true,
   typeDefs: schema,
   resolvers,
   context: {
     models
-  }
+  },
+  debug: true,
+  tracing: true,
+  introspection: true,
+  playground: true
 });
 
 server.applyMiddleware({
