@@ -18,7 +18,7 @@
     "nodemon": "^1.19.1"
   },
   "dependencies": {
-    "apollo-server": "^2.8.1",
+    "apollo-server": "^2.14.2",
     "apollo-server-express": "^2.8.1",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
